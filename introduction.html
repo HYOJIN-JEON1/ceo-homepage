@@ -208,6 +208,63 @@
             font-size: 0.9rem;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #modalBody {
+            padding: 20px;
+        }
+
+        #modalBody h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        #modalBody p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
         @media (max-width: 768px) {
             .benefits-grid,
             .faculty-grid {
@@ -237,7 +294,7 @@
         <a href="introduction.html">소개</a>
         <a href="application.html">지원</a>
         <a href="notice.html">공지</a>
-        <a href="community.html">커뮤니티</a>
+                                <a href="https://kd-tfinal.vercel.app/" target="_blank">커뮤니티</a>
     </nav>
 
     <header class="header">
@@ -279,72 +336,72 @@
             <div class="faculty-section">
                 <h3>교수진 소개</h3>
                 <div class="faculty-grid">
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('ryu')">
                         <i class="fas fa-user-tie"></i>
                         <h4>류근관 교수</h4>
                         <p>서울대학교 경제학부<br>전 통계청장</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('lee_jaewook')">
                         <i class="fas fa-user-tie"></i>
                         <h4>이재욱 교수</h4>
                         <p>서울대학교 산업공학과</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('lee_wonjong')">
                         <i class="fas fa-user-tie"></i>
                         <h4>이원종 교수</h4>
                         <p>서울대학교 지능정보융합학과</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('park_hyunwoo')">
                         <i class="fas fa-user-tie"></i>
                         <h4>박현우 교수</h4>
                         <p>서울대학교 데이터사이언스대학원</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('kim_taeseob')">
                         <i class="fas fa-user-tie"></i>
                         <h4>김태섭 교수</h4>
                         <p>서울대학교 데이터사이언스대학원</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('lee_jongseob')">
                         <i class="fas fa-user-tie"></i>
                         <h4>이종섭 교수</h4>
                         <p>서울대학교 경영대학</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('shin_hyopil')">
                         <i class="fas fa-user-tie"></i>
                         <h4>신효필 교수</h4>
                         <p>서울대학교 언어학과</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('lee_jungwoo')">
                         <i class="fas fa-user-tie"></i>
                         <h4>이정우 교수</h4>
                         <p>서울대학교 전기정보공학부</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('do_jaeyoung')">
                         <i class="fas fa-user-tie"></i>
                         <h4>도재영 교수</h4>
                         <p>서울대학교 전기정보공학부</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('park_woojin')">
                         <i class="fas fa-user-tie"></i>
                         <h4>박우진 교수</h4>
                         <p>서울대학교 산업공학과</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('park_jongwoo')">
                         <i class="fas fa-user-tie"></i>
                         <h4>박종우 교수</h4>
                         <p>서울대학교 기계공학부</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('heo_sungwook')">
                         <i class="fas fa-user-tie"></i>
                         <h4>허성욱 교수</h4>
                         <p>서울대학교 법학전문대학원</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('kim_heejin')">
                         <i class="fas fa-user-tie"></i>
                         <h4>김희진 객원교수</h4>
                         <p>서울대학교 데이터사이언스대학원</p>
                     </div>
-                    <div class="faculty-member">
+                    <div class="faculty-member" onclick="openModal('min_johong')">
                         <i class="fas fa-user-tie"></i>
                         <h4>민조홍 교수</h4>
                         <p>이화여자대학교 수학과</p>
@@ -356,6 +413,16 @@
                     </div>
                 </div>
                 <p class="faculty-note">* 본 강사진은 과정 및 강사 사정에 의해 차후 변동될 수 있습니다.</p>
+            </div>
+
+            <!-- 모달 팝업 -->
+            <div id="facultyModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="modalBody">
+                        <!-- 교수님 정보가 여기에 동적으로 삽입됩니다 -->
+                    </div>
+                </div>
             </div>
 
             <div class="curriculum-section">
@@ -393,5 +460,123 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // 모달 관련 변수
+        const facultyModal = document.getElementById('facultyModal');
+        const closeBtn = document.querySelector('.modal .close');
+        const modalBody = document.getElementById('modalBody');
+
+        // 모달 열기 함수
+        function openModal(facultyName) {
+            let facultyInfo = '';
+            switch (facultyName) {
+                case 'ryu':
+                    facultyInfo = `
+                        <h3>류근관 교수</h3>
+                        <p>서울대학교 경제학부<br>전 통계청장</p>
+                    `;
+                    break;
+                case 'lee_jaewook':
+                    facultyInfo = `
+                        <h3>이재욱 교수</h3>
+                        <p>서울대학교 산업공학과</p>
+                    `;
+                    break;
+                case 'lee_wonjong':
+                    facultyInfo = `
+                        <h3>이원종 교수</h3>
+                        <p>서울대학교 지능정보융합학과</p>
+                    `;
+                    break;
+                case 'park_hyunwoo':
+                    facultyInfo = `
+                        <h3>박현우 교수</h3>
+                        <p>서울대학교 데이터사이언스대학원</p>
+                    `;
+                    break;
+                case 'kim_taeseob':
+                    facultyInfo = `
+                        <h3>김태섭 교수</h3>
+                        <p>서울대학교 데이터사이언스대학원</p>
+                    `;
+                    break;
+                case 'lee_jongseob':
+                    facultyInfo = `
+                        <h3>이종섭 교수</h3>
+                        <p>서울대학교 경영대학</p>
+                    `;
+                    break;
+                case 'shin_hyopil':
+                    facultyInfo = `
+                        <h3>신효필 교수</h3>
+                        <p>서울대학교 언어학과</p>
+                    `;
+                    break;
+                case 'lee_jungwoo':
+                    facultyInfo = `
+                        <h3>이정우 교수</h3>
+                        <p>서울대학교 전기정보공학부</p>
+                    `;
+                    break;
+                case 'do_jaeyoung':
+                    facultyInfo = `
+                        <h3>도재영 교수</h3>
+                        <p>서울대학교 전기정보공학부</p>
+                    `;
+                    break;
+                case 'park_woojin':
+                    facultyInfo = `
+                        <h3>박우진 교수</h3>
+                        <p>서울대학교 산업공학과</p>
+                    `;
+                    break;
+                case 'park_jongwoo':
+                    facultyInfo = `
+                        <h3>박종우 교수</h3>
+                        <p>서울대학교 기계공학부</p>
+                    `;
+                    break;
+                case 'heo_sungwook':
+                    facultyInfo = `
+                        <h3>허성욱 교수</h3>
+                        <p>서울대학교 법학전문대학원</p>
+                    `;
+                    break;
+                case 'kim_heejin':
+                    facultyInfo = `
+                        <h3>김희진 객원교수</h3>
+                        <p>서울대학교 데이터사이언스대학원</p>
+                    `;
+                    break;
+                case 'min_johong':
+                    facultyInfo = `
+                        <h3>민조홍 교수</h3>
+                        <p>이화여자대학교 수학과</p>
+                    `;
+                    break;
+                default:
+                    facultyInfo = `
+                        <h3>교수 정보 없음</h3>
+                        <p>해당 교수에 대한 상세 정보가 없습니다.</p>
+                    `;
+                    break;
+            }
+            modalBody.innerHTML = facultyInfo;
+            facultyModal.style.display = 'block';
+        }
+
+        // 모달 닫기 함수
+        closeBtn.onclick = function() {
+            facultyModal.style.display = 'none';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            if (event.target == facultyModal) {
+                facultyModal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html> 
