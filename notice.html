@@ -6,6 +6,7 @@
     <title>공지사항 - 서울대학교 빅데이터 AI CEO 과정</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -97,79 +98,154 @@
             text-align: center;
         }
 
+        /* 관리자 버튼 */
+        .admin-section {
+            display: none;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #FF6B00;
+        }
+
+        .admin-btn {
+            background: #FF6B00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 1rem;
+        }
+
+        .admin-btn:hover {
+            background: #e55a00;
+        }
+
+        /* 공지사항 작성 폼 */
+        .notice-form {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
         .notice-list {
-            list-style: none;
-            padding: 0;
+            display: grid;
+            gap: 20px;
         }
 
         .notice-item {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            transition: background-color 0.3s ease;
-        }
-
-        .notice-item:last-child {
-            border-bottom: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #FF6B00;
+            transition: transform 0.3s ease;
         }
 
         .notice-item:hover {
-            background-color: #f9f9f9;
+            transform: translateY(-3px);
         }
 
-        .notice-item a {
-            text-decoration: none;
-            color: #333;
-            display: block;
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
 
         .notice-title {
             font-size: 1.2rem;
-            margin-bottom: 10px;
+            font-weight: 600;
             color: #333;
+            margin-bottom: 8px;
         }
 
         .notice-date {
+            color: #666;
             font-size: 0.9rem;
+        }
+
+        .notice-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .notice-important {
+            background: linear-gradient(135deg, #ff6b00, #ff8533);
+            color: white;
+        }
+
+        .notice-important .notice-title,
+        .notice-important .notice-date,
+        .notice-important .notice-content {
+            color: white;
+        }
+
+        .important-badge {
+            background: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
             color: #666;
         }
 
-        .notice-category {
-            display: inline-block;
-            padding: 4px 8px;
-            background: #FF6B00;
-            color: white;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-right: 10px;
+        .login-section {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
+        .login-form {
+            display: inline-block;
+            text-align: left;
         }
 
-        .pagination a {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 0 4px;
-            color: #333;
-            text-decoration: none;
+        .login-form input {
+            width: 200px;
+            padding: 10px;
+            margin: 5px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .pagination a:hover {
-            background: #FF6B00;
-            color: white;
-            border-color: #FF6B00;
-        }
-
-        .pagination a.active {
-            background: #FF6B00;
-            color: white;
-            border-color: #FF6B00;
+            border-radius: 5px;
         }
 
         @media (max-width: 768px) {
@@ -184,8 +260,13 @@
                 font-size: 0.9rem;
             }
 
-            .notice-title {
-                font-size: 1.1rem;
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .notice-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -196,7 +277,7 @@
         <a href="introduction.html">소개</a>
         <a href="application.html">지원</a>
         <a href="notice.html">공지</a>
-                                <a href="https://kd-tfinal.vercel.app/" target="_blank">커뮤니티</a>
+        <a href="https://kd-tfinal.vercel.app/" target="_blank">커뮤니티</a>
     </nav>
 
     <header class="header">
@@ -208,52 +289,237 @@
     <div class="sections">
         <div class="section">
             <h2>공지사항</h2>
-            <ul class="notice-list">
-                <li class="notice-item">
-                    <a href="#">
-                        <span class="notice-category">공지</span>
-                        <h3 class="notice-title">2025년 빅데이터 AI CEO 과정 모집 안내</h3>
-                        <p class="notice-date">2025.02.15</p>
-                    </a>
-                </li>
-                <li class="notice-item">
-                    <a href="#">
-                        <span class="notice-category">공지</span>
-                        <h3 class="notice-title">2025년 빅데이터 AI CEO 과정 교육 일정 안내</h3>
-                        <p class="notice-date">2025.02.10</p>
-                    </a>
-                </li>
-                <li class="notice-item">
-                    <a href="#">
-                        <span class="notice-category">공지</span>
-                        <h3 class="notice-title">2025년 빅데이터 AI CEO 과정 커리큘럼 안내</h3>
-                        <p class="notice-date">2025.02.05</p>
-                    </a>
-                </li>
-                <li class="notice-item">
-                    <a href="#">
-                        <span class="notice-category">공지</span>
-                        <h3 class="notice-title">2025년 빅데이터 AI CEO 과정 교수진 소개</h3>
-                        <p class="notice-date">2025.02.01</p>
-                    </a>
-                </li>
-                <li class="notice-item">
-                    <a href="#">
-                        <span class="notice-category">공지</span>
-                        <h3 class="notice-title">2025년 빅데이터 AI CEO 과정 FAQ</h3>
-                        <p class="notice-date">2025.01.25</p>
-                    </a>
-                </li>
-            </ul>
+            
+            <!-- 관리자 로그인 -->
+            <div id="loginSection" class="login-section">
+                <h3>관리자 로그인</h3>
+                <div class="login-form">
+                    <input type="email" id="adminEmail" placeholder="관리자 이메일" />
+                    <input type="password" id="adminPassword" placeholder="비밀번호" />
+                    <button class="admin-btn" onclick="adminLogin()">로그인</button>
+                </div>
+            </div>
 
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
+            <!-- 관리자 패널 -->
+            <div id="adminPanel" class="admin-section">
+                <h3>관리자 패널</h3>
+                <button class="admin-btn" onclick="toggleNoticeForm()">새 공지사항 작성</button>
+                <button class="admin-btn" onclick="adminLogout()">로그아웃</button>
+            </div>
+
+            <!-- 공지사항 작성 폼 -->
+            <div id="noticeForm" class="notice-form">
+                <h3>새 공지사항 작성</h3>
+                <div class="form-group">
+                    <label for="noticeTitle">제목</label>
+                    <input type="text" id="noticeTitle" placeholder="공지사항 제목을 입력하세요" />
+                </div>
+                <div class="form-group">
+                    <label for="noticeContent">내용</label>
+                    <textarea id="noticeContent" placeholder="공지사항 내용을 입력하세요"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isImportant" /> 중요 공지사항
+                    </label>
+                </div>
+                <button class="admin-btn" onclick="saveNotice()">공지사항 저장</button>
+                <button class="admin-btn" onclick="cancelNotice()" style="background: #6c757d;">취소</button>
+            </div>
+
+            <!-- 공지사항 목록 -->
+            <div id="noticeList" class="notice-list">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> 공지사항을 불러오는 중...
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Supabase 클라이언트 초기화 (실제 키로 교체 필요)
+        const supabaseUrl = 'YOUR_SUPABASE_URL'
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        let currentUser = null;
+
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotices();
+            checkAdminStatus();
+        });
+
+        // 관리자 로그인
+        async function adminLogin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (!email || !password) {
+                alert('이메일과 비밀번호를 입력해주세요.');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) throw error;
+
+                currentUser = data.user;
+                showAdminPanel();
+                document.getElementById('adminEmail').value = '';
+                document.getElementById('adminPassword').value = '';
+                
+            } catch (error) {
+                alert('로그인 실패: ' + error.message);
+            }
+        }
+
+        // 관리자 로그아웃
+        async function adminLogout() {
+            try {
+                await supabase.auth.signOut();
+                currentUser = null;
+                hideAdminPanel();
+            } catch (error) {
+                alert('로그아웃 실패: ' + error.message);
+            }
+        }
+
+        // 관리자 상태 확인
+        function checkAdminStatus() {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    currentUser = session.user;
+                    showAdminPanel();
+                } else {
+                    currentUser = null;
+                    hideAdminPanel();
+                }
+            });
+        }
+
+        // 관리자 패널 표시
+        function showAdminPanel() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+        }
+
+        // 관리자 패널 숨기기
+        function hideAdminPanel() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('noticeForm').style.display = 'none';
+        }
+
+        // 공지사항 작성 폼 토글
+        function toggleNoticeForm() {
+            const form = document.getElementById('noticeForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // 공지사항 저장
+        async function saveNotice() {
+            const title = document.getElementById('noticeTitle').value;
+            const content = document.getElementById('noticeContent').value;
+            const isImportant = document.getElementById('isImportant').checked;
+
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력해주세요.');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('notices')
+                    .insert([
+                        {
+                            title: title,
+                            content: content,
+                            is_important: isImportant,
+                            author_id: currentUser.id,
+                            created_at: new Date().toISOString()
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                alert('공지사항이 저장되었습니다.');
+                cancelNotice();
+                loadNotices();
+
+            } catch (error) {
+                alert('저장 실패: ' + error.message);
+            }
+        }
+
+        // 공지사항 취소
+        function cancelNotice() {
+            document.getElementById('noticeTitle').value = '';
+            document.getElementById('noticeContent').value = '';
+            document.getElementById('isImportant').checked = false;
+            document.getElementById('noticeForm').style.display = 'none';
+        }
+
+        // 공지사항 로드
+        async function loadNotices() {
+            try {
+                const { data, error } = await supabase
+                    .from('notices')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                displayNotices(data || []);
+
+            } catch (error) {
+                console.error('공지사항 로드 실패:', error);
+                displayNotices([]);
+            }
+        }
+
+        // 공지사항 표시
+        function displayNotices(notices) {
+            const noticeList = document.getElementById('noticeList');
+            
+            if (notices.length === 0) {
+                noticeList.innerHTML = '<div class="loading">등록된 공지사항이 없습니다.</div>';
+                return;
+            }
+
+            noticeList.innerHTML = notices.map(notice => {
+                const date = new Date(notice.created_at).toLocaleDateString('ko-KR');
+                const importantClass = notice.is_important ? 'notice-important' : '';
+                const importantBadge = notice.is_important ? '<span class="important-badge">중요</span>' : '';
+                
+                return `
+                    <div class="notice-item ${importantClass}">
+                        <div class="notice-header">
+                            <div>
+                                <div class="notice-title">${notice.title} ${importantBadge}</div>
+                                <div class="notice-date">${date}</div>
+                            </div>
+                        </div>
+                        <div class="notice-content">${notice.content.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 실시간 업데이트 구독
+        supabase
+            .channel('notices')
+            .on('postgres_changes', 
+                { event: '*', schema: 'public', table: 'notices' }, 
+                (payload) => {
+                    loadNotices();
+                }
+            )
+            .subscribe();
+    </script>
 </body>
 </html> 
